@@ -1,0 +1,42 @@
+{
+  "dataset_source": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
+  "target": "is_strong_event",
+  "positive_class": "magnitude >= 4.5",
+  "feature_columns": [
+    "latitude",
+    "longitude",
+    "depth_km",
+    "abs_latitude",
+    "log_depth_km",
+    "hour",
+    "day_of_month",
+    "felt",
+    "tsunami",
+    "magnitude_type",
+    "status",
+    "net",
+    "geo_quadrant"
+  ],
+  "best_model": "Logistic Regression",
+  "best_params": {
+    "model__C": 1.0
+  },
+  "metrics": {
+    "accuracy": 0.9518348623853211,
+    "precision": 0.5503597122302158,
+    "recall": 0.9935064935064936,
+    "f1": 0.7083333333333334,
+    "roc_auc": 0.9858182029181217,
+    "confusion_matrix": [
+      [
+        2337,
+        125
+      ],
+      [
+        1,
+        153
+      ]
+    ]
+  },
+  "records_used": 10464
+}
