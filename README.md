@@ -1,4 +1,4 @@
-# Global Earthquake Activity Analysis and Strong-Event Prediction
+# Global Earthquake Activity Analysis and Strong-Event Classification
 
 This project is my end-to-end data science analysis of recent global earthquake activity using data from the United States Geological Survey (USGS).
 
@@ -15,9 +15,14 @@ Dataset source: [USGS Earthquake Hazards Program - all earthquakes, past month](
 - `outputs/baseline_model_results.csv` - baseline model comparison.
 - `outputs/tuned_model_results.csv` - tuned model results.
 - `outputs/feature_importance.csv` - final model feature importance, when available.
+- `outputs/random_split_extended_metrics.csv` - random split metrics with average precision, balanced accuracy, and Brier score.
+- `outputs/spatial_holdout_by_region.csv` - leave-one-geographic-quadrant-out validation results.
+- `outputs/spatial_holdout_summary.csv` - summary of stricter spatial validation performance.
+- `run_spatial_validation.py` - reproducible script for the stricter geographic validation analysis.
 - `models/best_earthquake_strength_model.joblib` - saved final model pipeline.
 - `models/best_earthquake_strength_model_metadata.json` - final model metadata and metrics.
 - `requirements.txt` - required Python packages.
+- `requirements_spatial_lock.txt` - package versions used for the spatial validation update.
 
 ## Main Questions
 
@@ -64,9 +69,14 @@ The models were evaluated using:
 - Recall
 - F1-score
 - ROC-AUC
+- Average precision
+- Balanced accuracy
+- Brier score
 - Confusion matrix
 
 ROC-AUC was used as the main ranking metric because stronger events are less common than lower-magnitude events.
+
+The original random 75:25 split gave logistic regression the strongest ROC-AUC (0.986) and recall (0.994). A stricter leave-one-geographic-quadrant-out validation was then added to test whether performance transferred across broad world regions. Under that stricter analysis, logistic regression had a mean spatial ROC-AUC of 0.752 and a minimum quadrant ROC-AUC of 0.586. This is a more cautious and scientifically useful result because it shows that the random split likely overstated geographic generalisation.
 
 ## How to Run
 
@@ -82,6 +92,12 @@ Open and run:
 earthquake_activity_analysis.ipynb
 ```
 
+To reproduce the stricter spatial validation outputs:
+
+```bash
+python run_spatial_validation.py
+```
+
 The notebook uses the CSV snapshot in the `data` folder. To refresh the dataset, download the current USGS feed:
 
 ```text
@@ -93,3 +109,4 @@ https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson
 - The dataset is a time-based snapshot, so results will change if the data is refreshed.
 - This model is for data science learning and portfolio demonstration, not earthquake forecasting.
 - The model classifies reported events from their recorded properties; it does not predict future earthquakes.
+- The spatial holdout is an internal geographic validation, not a true external validation dataset.

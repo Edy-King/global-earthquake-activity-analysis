@@ -1,0 +1,33 @@
+{
+  "records_used": 10464,
+  "time_range_utc": [
+    "2026-06-05T11:52:03.630000+00:00",
+    "2026-07-05T11:38:07.480000+00:00"
+  ],
+  "spatial_validation": "Leave-one-geographic-quadrant-out validation. Each quadrant is held out once while the model is trained on the other three quadrants.",
+  "feature_columns": [
+    "latitude",
+    "longitude",
+    "depth_km",
+    "abs_latitude",
+    "log_depth_km",
+    "hour",
+    "day_of_month",
+    "felt",
+    "tsunami",
+    "magnitude_type",
+    "status",
+    "net",
+    "geo_quadrant"
+  ],
+  "leakage_controls": [
+    "magnitude excluded",
+    "USGS significance excluded",
+    "title/place/url excluded"
+  ],
+  "outputs": [
+    "outputs/random_split_extended_metrics.csv",
+    "outputs/spatial_holdout_by_region.csv",
+    "outputs/spatial_holdout_summary.csv"
+  ]
+}

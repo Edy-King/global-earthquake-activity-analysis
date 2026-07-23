@@ -38,5 +38,22 @@
       ]
     ]
   },
-  "records_used": 10464
+  "records_used": 10464,
+  "spatial_validation": {
+    "method": "leave-one-geographic-quadrant-out internal validation",
+    "interpretation": "Stricter geographic validation showed weaker transfer than the random split; this is not external validation.",
+    "logistic_regression": {
+      "mean_roc_auc": 0.7520052929314762,
+      "min_roc_auc": 0.5858103975535167,
+      "mean_average_precision": 0.6994251436420841,
+      "mean_recall": 0.9191010934819897,
+      "mean_balanced_accuracy": 0.6165529670580405,
+      "mean_brier_score": 0.27542062837384157
+    },
+    "output_files": [
+      "outputs/spatial_holdout_by_region.csv",
+      "outputs/spatial_holdout_summary.csv",
+      "outputs/random_split_extended_metrics.csv"
+    ]
+  }
 }

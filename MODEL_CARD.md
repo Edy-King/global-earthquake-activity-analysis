@@ -34,7 +34,6 @@ The model uses event location, depth, time, and compact metadata, including:
 - day of month
 - felt reports
 - tsunami flag
-- USGS significance score
 - magnitude type
 - event status
 - reporting network
@@ -51,6 +50,24 @@ Raw magnitude and USGS significance score were not used as model inputs because 
 
 The best baseline model was tuned with randomized search and cross-validation.
 
+## Validation
+
+The original random 75:25 held-out split produced strong within-snapshot performance for logistic regression:
+
+- ROC-AUC: 0.986
+- Precision: 0.550
+- Recall: 0.994
+- F1-score: 0.708
+
+A stricter leave-one-geographic-quadrant-out validation was added after manuscript review. Each broad quadrant was held out once while the model was trained on the other three quadrants. This produced a more conservative estimate:
+
+- Mean logistic-regression spatial ROC-AUC: 0.752
+- Minimum logistic-regression quadrant ROC-AUC: 0.586
+- Mean logistic-regression recall: 0.919
+- Mean logistic-regression balanced accuracy: 0.617
+
+This means the model should be treated as a retrospective classification workflow, not as a regionally general earthquake prediction system.
+
 ## Intended Use
 
 This model is intended for educational data science and portfolio demonstration. It can help show how reported earthquake properties relate to stronger event classification.
@@ -60,6 +77,7 @@ This model is intended for educational data science and portfolio demonstration.
 - This is not an earthquake forecasting system.
 - The model classifies already reported events from recorded properties.
 - The dataset is a moving USGS monthly snapshot, so results can change when refreshed.
+- The spatial holdout shows weaker geographic generalisation than the random split.
 - The model does not include geological plate boundary data, historical fault-line information, or real-time sensor streams.
 
 ## Artifacts
@@ -69,3 +87,6 @@ This model is intended for educational data science and portfolio demonstration.
 - `outputs/baseline_model_results.csv`
 - `outputs/tuned_model_results.csv`
 - `outputs/feature_importance.csv`
+- `outputs/random_split_extended_metrics.csv`
+- `outputs/spatial_holdout_by_region.csv`
+- `outputs/spatial_holdout_summary.csv`
